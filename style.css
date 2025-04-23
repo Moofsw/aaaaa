@@ -1,0 +1,359 @@
+/* Reset básico e fontes */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    height: 100%;
+}
+
+.app-container {
+    display: flex;
+    height: 100vh; /* Altura total da viewport */
+}
+
+/* --- Barra Lateral (Sidebar) --- */
+#sidebar {
+    width: 250px;
+    background: #121e66; /* Cor escura */
+    color: #fff;
+    transition: all 0.3s;
+    padding-top: 20px;
+    flex-shrink: 0; /* Impede que a sidebar encolha */
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    padding: 10px 20px;
+    background: #217aff; /* Um pouco mais claro */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#sidebar ul.components {
+    padding: 0;
+    list-style: none;
+}
+
+#sidebar ul li a {
+    padding: 12px 20px;
+    font-size: 1.1em;
+    display: block;
+    color: #adb5bd; /* Cinza claro */
+    text-decoration: none;
+    transition: all 0.3s;
+    border-left: 3px solid transparent; /* Para indicar item ativo */
+}
+
+#sidebar ul li a:hover {
+    color: #fff;
+    background: #1a96cf;
+}
+
+#sidebar ul li a.active {
+    color: #fff;
+    background: #007bff; /* Azul para item ativo */
+    border-left: 3px solid #0056b3;
+}
+
+/* Ícones (Placeholder - substitua por uma biblioteca de ícones como FontAwesome ou SVGs) */
+.icon {
+    display: inline-block;
+    width: 1.2em; /* Espaço para o ícone */
+    margin-right: 8px;
+    /* Adicione background-image ou máscara para ícones reais */
+}
+.icon-garage::before { content: "🚗"; } /* Exemplo com emoji */
+.icon-add::before { content: "➕"; }
+.icon-schedule::before { content: "📅"; }
+.icon-history::before { content: "📜"; }
+
+
+/* --- Conteúdo Principal --- */
+#main-content {
+    flex-grow: 1; /* Ocupa o espaço restante */
+    padding: 25px;
+    overflow-y: auto; /* Habilita scroll se o conteúdo for maior */
+    background-color: #fff;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1); /* Sombra sutil vinda da sidebar */
+}
+
+.content-section {
+    display: none; /* Esconde todas as seções por padrão */
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.content-section.active {
+    display: block; /* Mostra apenas a seção ativa */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h2, h3, h4 {
+    color: #ffffff;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+h2 .icon, h3 .icon {
+    margin-right: 10px;
+}
+
+/* --- Formulários --- */
+.form-layout {
+    max-width: 600px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #495057;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group input[type="email"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box; /* Para padding não aumentar o tamanho */
+    font-size: 1em;
+}
+
+.form-group textarea {
+    resize: vertical; /* Permite redimensionar apenas verticalmente */
+}
+
+/* --- Botões --- */
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s ease;
+    margin-right: 5px; /* Espaçamento entre botões */
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+.btn-success:hover {
+    background-color: #218838;
+}
+
+.btn-small {
+     padding: 5px 10px;
+     font-size: 0.9em;
+}
+
+.btn-back {
+    margin-bottom: 15px;
+}
+
+
+/* --- Garagem (Grid de Veículos) --- */
+.vehicle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Grid responsivo */
+    gap: 20px;
+}
+
+.vehicle-card {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Empurra botões para baixo */
+}
+.vehicle-card:hover {
+     box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+}
+
+.vehicle-card h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #0056b3;
+    border: none; /* Remover borda do h4 dentro do card */
+    padding: 0;
+}
+
+.vehicle-card p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 0.95em;
+    flex-grow: 1; /* Ocupa espaço para empurrar botões */
+}
+.vehicle-card strong {
+    color: #333;
+}
+
+.vehicle-card .actions {
+    margin-top: 15px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+    display: flex; /* Alinha botões */
+    gap: 5px; /* Espaço entre botões */
+    flex-wrap: wrap; /* Quebra linha se não couber */
+}
+
+/* --- Detalhes do Veículo --- */
+.vehicle-details p {
+     margin: 8px 0;
+     font-size: 1.1em;
+}
+.vehicle-details strong {
+    display: inline-block;
+    width: 80px; /* Alinha os : */
+    color: #555;
+}
+
+/* --- Histórico de Manutenção --- */
+#maintenance-history-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+#maintenance-history-list th,
+#maintenance-history-list td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+#maintenance-history-list th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+#maintenance-history-list tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+#maintenance-history-list .maint-actions button {
+    margin-right: 5px;
+}
+
+
+/* --- Mensagens de Erro/Sucesso --- */
+.error-message {
+    color: #dc3545; /* Vermelho */
+    font-size: 0.9em;
+    margin-top: 10px;
+    padding: 8px;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    display: none; /* Oculto por padrão */
+}
+.error-message.show {
+    display: block;
+}
+
+.success-message {
+    color: #155724; /* Verde escuro */
+    font-size: 0.9em;
+    margin-top: 10px;
+    padding: 8px;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 4px;
+    display: none; /* Oculto por padrão */
+}
+.success-message.show {
+     display: block;
+}
+
+/* Utilitários */
+.hidden {
+    display: none !important; /* Força o ocultamento */
+}
+
+/* --- Responsividade (Exemplo Básico) --- */
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column; /* Empilha sidebar e conteúdo */
+        height: auto;
+    }
+
+    #sidebar {
+        width: 100%;
+        height: auto; /* Altura automática */
+        position: relative; /* Ou 'sticky' se quiser fixa no topo */
+         padding-top: 0;
+         flex-direction: row; /* Menu horizontal em telas pequenas */
+         justify-content: space-around;
+         align-items: center;
+    }
+     #sidebar .sidebar-header {
+         display: none; /* Esconde o título do menu */
+     }
+      #sidebar ul.components {
+         display: flex;
+         flex-direction: row; /* Links lado a lado */
+     }
+     #sidebar ul li a {
+         padding: 15px 10px;
+         border-left: none;
+         border-bottom: 3px solid transparent; /* Indicador ativo embaixo */
+     }
+      #sidebar ul li a.active {
+         border-left: none;
+         border-bottom: 3px solid #0056b3;
+     }
+
+
+    #main-content {
+        padding: 15px;
+         box-shadow: none;
+    }
+
+    .vehicle-grid {
+        grid-template-columns: 1fr; /* Uma coluna em telas pequenas */
+    }
+}

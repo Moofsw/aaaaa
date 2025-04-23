@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de veiculos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Barra de Navegação Lateral -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Menu</h3>
+            </div>
+            <ul class="list-unstyled components">
+                <li><a href="#" data-target="garage-view"><i class="icon icon-garage"></i> Garagem</a></li>
+                <li><a href="#" data-target="add-vehicle-view"><i class="icon icon-add"></i> Adicionar Veículo</a></li>
+                <li><a href="#" data-target="schedule-view"><i class="icon icon-schedule"></i> Agendar Manutenção</a></li>
+                <!-- O Histórico será acessado a partir da Garagem -->
+            </ul>
+        </nav>
+
+        <!-- Conteúdo Principal -->
+        <main id="main-content">
+            <!-- Seção da Garagem -->
+            <section id="garage-view" class="content-section active">
+                <h2><i class="icon icon-garage"></i> Minha Garagem</h2>
+                <div id="vehicle-list" class="vehicle-grid">
+                    <!-- Veículos serão carregados aqui pelo JavaScript -->
+                    <p>Nenhum veículo cadastrado ainda.</p>
+                </div>
+            </section>
+
+            <!-- Seção de Adicionar Veículo -->
+            <section id="add-vehicle-view" class="content-section">
+                <h2><i class="icon icon-add"></i> Adicionar Novo Veículo</h2>
+                <form id="add-vehicle-form" class="form-layout">
+                    <div class="form-group">
+                        <label for="make">Marca:</label>
+                        <input type="text" id="make" name="make" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="model">Modelo:</label>
+                        <input type="text" id="model" name="model" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="year">Ano:</label>
+                        <input type="number" id="year" name="year" min="1900" max="2099" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="plate">Placa:</label>
+                        <input type="text" id="plate" name="plate" required pattern="[A-Za-z]{3}-?[0-9][A-Za-z0-9][0-9]{2}" title="Formato AAA-1234 ou AAA1B34">
+                    </div>
+                     <div class="form-group">
+                        <label for="vin">VIN (Opcional):</label>
+                        <input type="text" id="vin" name="vin">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar Veículo</button>
+                    <div class="error-message" id="add-vehicle-error"></div>
+                </form>
+            </section>
+
+            <!-- Seção de Agendar Manutenção -->
+            <section id="schedule-view" class="content-section">
+                <h2><i class="icon icon-schedule"></i> Agendar Manutenção</h2>
+                <form id="schedule-maintenance-form" class="form-layout">
+                    <div class="form-group">
+                        <label for="schedule-vehicle">Veículo:</label>
+                        <select id="schedule-vehicle" name="vehicleId" required>
+                            <option value="">Selecione um veículo</option>
+                            <!-- Opções carregadas pelo JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="service-type">Tipo de Serviço:</label>
+                        <input type="text" id="service-type" name="serviceType" required list="service-suggestions">
+                         <datalist id="service-suggestions">
+                            <option value="Troca de Óleo">
+                            <option value="Revisão Geral">
+                            <option value="Alinhamento e Balanceamento">
+                            <option value="Troca de Pneus">
+                            <option value="Freios">
+                        </datalist>
+                    </div>
+                    <div class="form-group">
+                        <label for="schedule-date">Data Preferida:</label>
+                        <input type="date" id="schedule-date" name="scheduleDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">Observações:</label>
+                        <textarea id="notes" name="notes" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Agendar</button>
+                     <div class="success-message" id="schedule-success"></div>
+                    <div class="error-message" id="schedule-error"></div>
+                </form>
+            </section>
+
+             <!-- Seção de Detalhes do Veículo e Histórico -->
+            <section id="vehicle-detail-view" class="content-section">
+                <button class="btn btn-secondary btn-back" data-target="garage-view">< Voltar para Garagem</button>
+                <h2 id="detail-vehicle-name">Detalhes do Veículo</h2>
+                <div id="vehicle-details-content" class="vehicle-details">
+                    <!-- Detalhes carregados aqui -->
+                </div>
+
+                <h3><i class="icon icon-history"></i> Histórico de Manutenção</h3>
+                <button id="add-maintenance-entry-btn" class="btn btn-success btn-small">Adicionar Registro</button>
+                <div id="maintenance-history-list">
+                    <p>Nenhum histórico de manutenção para este veículo.</p>
+                    <!-- Histórico carregado aqui -->
+                </div>
+
+                <!-- Formulário para Adicionar Registro de Manutenção (inicialmente oculto) -->
+                <form id="add-maintenance-form" class="form-layout hidden">
+                    <h4>Novo Registro de Manutenção</h4>
+                     <input type="hidden" id="maintenance-vehicle-id"> <!-- Para saber a qual veículo adicionar -->
+                    <div class="form-group">
+                        <label for="maint-date">Data:</label>
+                        <input type="date" id="maint-date" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="maint-service">Serviço Realizado:</label>
+                        <input type="text" id="maint-service" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="maint-cost">Custo (R$):</label>
+                        <input type="number" id="maint-cost" step="0.01" min="0">
+                    </div>
+                     <div class="form-group">
+                        <label for="maint-notes">Observações:</label>
+                        <textarea id="maint-notes" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-small">Salvar Registro</button>
+                    <button type="button" id="cancel-add-maintenance" class="btn btn-secondary btn-small">Cancelar</button>
+                    <div class="error-message" id="add-maintenance-error"></div>
+                </form>
+            </section>
+
+            <!-- Área para Mensagens Globais/Confirmações -->
+            <div id="global-message" class="message-area"></div>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
